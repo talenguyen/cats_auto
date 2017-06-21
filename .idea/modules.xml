@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/source-generator.iml" filepath="$PROJECT_DIR$/.idea/modules/source-generator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/source-generator_main.iml" filepath="$PROJECT_DIR$/.idea/modules/source-generator_main.iml" group="source-generator" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/source-generator_test.iml" filepath="$PROJECT_DIR$/.idea/modules/source-generator_test.iml" group="source-generator" />
+    </modules>
+  </component>
+</project>
