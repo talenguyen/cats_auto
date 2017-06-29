@@ -5,7 +5,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 /**
  * Created by Giang Nguyen on 6/20/17.
@@ -16,14 +19,17 @@ public class MainForm {
   private JPanel container;
   private JButton btViewVideo;
   private JButton btQuickFight;
-  private JRadioButton rbClose1;
-  private JRadioButton rbClose2;
+  private JTextArea taOutput;
 
   private MainForm() {
     final Processor processor = new Processor();
     final Device device = new Device(processor, "0540e20f252725a6");
-    quickFight = new QuickFight(device);
-    viewVideo = new ViewVideo(device);
+    final Function1<String, Unit> output = s -> {
+      taOutput.setText(s);
+      return null;
+    };
+    quickFight = new QuickFight(device, output);
+    viewVideo = new ViewVideo(device, output);
     btQuickFight.addActionListener(e -> {
       if (quickFight.isRunning()) {
         btQuickFight.setText("Quick Fight");
@@ -49,15 +55,6 @@ public class MainForm {
         btViewVideo.setEnabled(true);
       }
     });
-    final ActionListener closeCheckChangeListener = e -> {
-      if (e.getSource() == rbClose1) {
-        viewVideo.changeClosePosition(ViewVideo.CloseButton.ONE);
-      } else {
-        viewVideo.changeClosePosition(ViewVideo.CloseButton.TWO);
-      }
-    };
-    rbClose1.addActionListener(closeCheckChangeListener);
-    rbClose2.addActionListener(closeCheckChangeListener);
   }
 
   public static void main(String[] args) {

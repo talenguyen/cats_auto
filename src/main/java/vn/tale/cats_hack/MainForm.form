@@ -10,7 +10,7 @@
     <children>
       <component id="8d9b3" class="javax.swing.JButton" binding="btViewVideo">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
             <minimum-size width="100" height="50"/>
           </grid>
         </constraints>
@@ -18,32 +18,23 @@
           <text value="View Video"/>
         </properties>
       </component>
-      <component id="976e6" class="javax.swing.JRadioButton" binding="rbClose2">
-        <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Close 2"/>
-        </properties>
-      </component>
-      <component id="96a52" class="javax.swing.JRadioButton" binding="rbClose1">
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <selected value="true"/>
-          <text value="Close 1"/>
-        </properties>
-      </component>
       <component id="5c78e" class="javax.swing.JButton" binding="btQuickFight">
         <constraints>
-          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
             <minimum-size width="100" height="50"/>
           </grid>
         </constraints>
         <properties>
           <text value="Quick Fight"/>
         </properties>
+      </component>
+      <component id="f86c2" class="javax.swing.JTextArea" binding="taOutput">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="50"/>
+          </grid>
+        </constraints>
+        <properties/>
       </component>
     </children>
   </grid>

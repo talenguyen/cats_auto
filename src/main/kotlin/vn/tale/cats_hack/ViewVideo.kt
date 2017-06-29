@@ -9,47 +9,39 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by Giang Nguyen on 6/19/17.
  */
-class ViewVideo(val device: Device) {
-  enum class CloseButton(val point: Point) {
-    ONE(Point(1700, 90)),
-    TWO(Point(1890, 45))
-  }
-
+class ViewVideo(val device: Device, val output: (String) -> Unit = {}) {
   private val SKIP_BUTTON = Point(1200, 980)
   private val OK_BUTTON = Point(930, 900)
-  private val CLOSE_BUTTON = Point(1870, 45)
-  private val CLOSE2_BUTTON = Point(1700, 90)
 
-  private val events: Observable<Point>
-  private val duration: Long = 39
+  private val commands: Observable<() -> Unit>
+  private val duration: Long = 37
   private var disposable: Disposable? = null
-  private var closeButton: CloseButton = CloseButton.ONE
 
   init {
-    val skip = Observable.interval(2, duration, TimeUnit.SECONDS, Schedulers.single())
+    val skipCommand = Observable.interval(2, duration, TimeUnit.SECONDS, Schedulers.single())
+        .doOnNext { print("Skip") }
         .map { SKIP_BUTTON }
-        .doOnNext { println("Skip") }
+        .map { { device.tap(it) } }
 
-    val close = Observable.interval(33, duration, TimeUnit.SECONDS, Schedulers.single())
-        .map { closeButton }
-        .doOnNext { println(it) }
-        .map { closeButton.point }
-        .doOnNext { println("Close") }
+    val closeCommand = Observable.interval(35, duration, TimeUnit.SECONDS, Schedulers.single())
+        .doOnNext { print("CLOSE") }
+        .map { { device.back() } }
 
-    val ok = Observable.interval(36, duration, TimeUnit.SECONDS, Schedulers.single())
+    val okCommand = Observable.interval(37, duration, TimeUnit.SECONDS, Schedulers.single())
+        .doOnNext { print("OK") }
         .map { OK_BUTTON }
-        .doOnNext { println("OK") }
+        .map { { device.tap(it) } }
 
-    events = Observable.merge(skip, close, ok)
+    commands = Observable.merge(skipCommand, closeCommand, okCommand)
   }
 
-  fun changeClosePosition(closeButton: CloseButton) {
-    this.closeButton = closeButton
+  fun print(message: String) {
+    output(message)
   }
 
   fun start(): Unit {
-    disposable = events
-        .subscribe { device.tap(it) }
+    disposable = commands
+        .subscribe { it.invoke() }
   }
 
   fun stop(): Unit {

@@ -17,4 +17,12 @@ class Device(private val processor: Processor, private val deviceId: String? = n
       processor.exec("adb", "-s", deviceId, "shell", "input", "tap", "$x", "$y")
     }
   }
+
+  fun back() {
+    if (deviceId == null) {
+      processor.exec("adb", "shell", "input", "keyevent", "4")
+    } else {
+      processor.exec("adb", "-s", deviceId, "shell", "input", "keyevent", "4")
+    }
+  }
 }
