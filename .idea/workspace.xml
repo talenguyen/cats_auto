@@ -1,35 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5526628f-4669-4e97-a9ac-2092cf19df02" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/ViewVideo$CloseButton.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/ViewVideo$close$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/ViewVideo$close$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/ViewVideo$close$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/ViewVideo$close$4.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/ViewVideo$ok$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/ViewVideo$ok$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/ViewVideo$skip$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/ViewVideo$skip$2.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/Device.class" afterPath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/Device.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/MainForm.class" afterPath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/MainForm.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/QuickFight$center$1.class" afterPath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/QuickFight$center$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/QuickFight$center$2.class" afterPath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/QuickFight$center$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/QuickFight$ok$1.class" afterPath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/QuickFight$ok$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/QuickFight$ok$2.class" afterPath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/QuickFight$ok$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/QuickFight$quickFight$1.class" afterPath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/QuickFight$quickFight$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/QuickFight$quickFight$2.class" afterPath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/QuickFight$quickFight$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/QuickFight$start$1.class" afterPath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/QuickFight$start$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/QuickFight.class" afterPath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/QuickFight.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/ViewVideo$start$1.class" afterPath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/ViewVideo$start$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/ViewVideo.class" afterPath="$PROJECT_DIR$/build/classes/main/vn/tale/cats_hack/ViewVideo.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/vn/tale/cats_hack/MainForm.form" afterPath="$PROJECT_DIR$/src/main/java/vn/tale/cats_hack/MainForm.form" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/vn/tale/cats_hack/MainForm.java" afterPath="$PROJECT_DIR$/src/main/java/vn/tale/cats_hack/MainForm.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/vn/tale/cats_hack/Device.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/vn/tale/cats_hack/Device.kt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/vn/tale/cats_hack/QuickFight.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/vn/tale/cats_hack/QuickFight.kt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/vn/tale/cats_hack/ViewVideo.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/vn/tale/cats_hack/ViewVideo.kt" />
-    </list>
+    <list default="true" id="5526628f-4669-4e97-a9ac-2092cf19df02" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

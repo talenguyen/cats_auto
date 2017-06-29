@@ -16,22 +16,24 @@ class QuickFight(val device: Device, val output: (String) -> Unit = {}) {
 
   val duration: Long = 15
   var disposable: Disposable? = null
-  val events: Observable<Point>
+  val commands: Observable<() -> Unit>
 
   init {
-    val quickFight = Observable.interval(2, duration, TimeUnit.SECONDS, Schedulers.single())
-        .map { QUICK_FIGHT_BUTTON }
+    val quickFightCommand = Observable.interval(2, duration, TimeUnit.SECONDS, Schedulers.single())
         .doOnNext { print("Quick Fight") }
+        .map { QUICK_FIGHT_BUTTON }
+        .map { { device.tap(it) } }
 
-    val center = Observable.interval(4, duration, TimeUnit.SECONDS, Schedulers.single())
-        .map { CENTER }
+    val centerCommand = Observable.interval(4, duration, TimeUnit.SECONDS, Schedulers.single())
         .doOnNext { print("Center") }
+        .map { CENTER }
+        .map { { device.tap(it) } }
 
-    val ok = Observable.interval(11, duration, TimeUnit.SECONDS, Schedulers.single())
-        .map { OK_BUTTON }
+    val okCommand = Observable.interval(11, duration, TimeUnit.SECONDS, Schedulers.single())
         .doOnNext { print("OK") }
+        .map { { device.back() } }
 
-    events = Observable.merge(quickFight, center, ok)
+    commands = Observable.merge(quickFightCommand, centerCommand, okCommand)
   }
 
   fun print(message: String) {
@@ -39,8 +41,7 @@ class QuickFight(val device: Device, val output: (String) -> Unit = {}) {
   }
 
   fun start(): Unit {
-    disposable = events
-        .subscribe { device.tap(it) }
+    disposable = commands.subscribe { it() }
   }
 
   fun stop(): Unit {
