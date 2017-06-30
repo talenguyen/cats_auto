@@ -10,30 +10,17 @@ import java.util.concurrent.TimeUnit
  * Created by Giang Nguyen on 6/19/17.
  */
 class QuickFight(val device: Device, val output: (String) -> Unit = {}) {
-  private val QUICK_FIGHT_BUTTON = Point(1380, 950)
-  private val OK_BUTTON = Point(950, 990)
-  private val CENTER = Point(950, 450)
+  private val G_BUTTON = Point(1054, 875)
 
-  val duration: Long = 15
+  val duration: Long = 1
   var disposable: Disposable? = null
   val commands: Observable<() -> Unit>
 
   init {
-    val quickFightCommand = Observable.interval(2, duration, TimeUnit.SECONDS, Schedulers.single())
-        .doOnNext { print("Quick Fight") }
-        .map { QUICK_FIGHT_BUTTON }
+    commands = Observable.interval(0, duration, TimeUnit.SECONDS, Schedulers.single())
+        .doOnNext { print("Supper G-Button $it") }
+        .map { G_BUTTON }
         .map { { device.tap(it) } }
-
-    val centerCommand = Observable.interval(4, duration, TimeUnit.SECONDS, Schedulers.single())
-        .doOnNext { print("Center") }
-        .map { CENTER }
-        .map { { device.tap(it) } }
-
-    val okCommand = Observable.interval(11, duration, TimeUnit.SECONDS, Schedulers.single())
-        .doOnNext { print("OK") }
-        .map { { device.back() } }
-
-    commands = Observable.merge(quickFightCommand, centerCommand, okCommand)
   }
 
   fun print(message: String) {

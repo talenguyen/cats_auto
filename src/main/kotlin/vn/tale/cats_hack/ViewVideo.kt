@@ -9,9 +9,10 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by Giang Nguyen on 6/19/17.
  */
-class ViewVideo(val device: Device, val output: (String) -> Unit = {}) {
+class ViewVideo(val device: Device, val log: (String) -> Unit = {}) {
   private val SKIP_BUTTON = Point(1200, 980)
-  private val OK_BUTTON = Point(930, 900)
+  private val COLLECT_PRICE_BUTTON = Point(955, 800)
+  private val UNLOCK_BUTTON = Point(950, 920)
 
   private val commands: Observable<() -> Unit>
   private val duration: Long = 37
@@ -19,29 +20,41 @@ class ViewVideo(val device: Device, val output: (String) -> Unit = {}) {
 
   init {
     val skipCommand = Observable.interval(2, duration, TimeUnit.SECONDS, Schedulers.single())
-        .doOnNext { print("Skip") }
+        .doOnNext { log("Skip") }
         .map { SKIP_BUTTON }
         .map { { device.tap(it) } }
 
     val closeCommand = Observable.interval(35, duration, TimeUnit.SECONDS, Schedulers.single())
-        .doOnNext { print("CLOSE") }
+        .doOnNext { log("CLOSE") }
         .map { { device.back() } }
 
     val okCommand = Observable.interval(37, duration, TimeUnit.SECONDS, Schedulers.single())
-        .doOnNext { print("OK") }
-        .map { OK_BUTTON }
+        .doOnNext { log("OK") }
+        .map { { device.back() } }
+
+    val viewVideoLoopCommand = Observable.merge(skipCommand, closeCommand, okCommand)
+        .take(4)
+
+    val tapCollectPricesCommand = Observable.interval(
+        0,
+        1,
+        TimeUnit.SECONDS,
+        Schedulers.single())
+        .doOnNext { log("Collect Prices $it") }
+        .map { COLLECT_PRICE_BUTTON }
+        .map { { device.tap(it) } }
+        .take(6)
+
+
+    val tapUnlockCommand = Observable.just(UNLOCK_BUTTON)
+        .doOnNext { log("Unlock") }
         .map { { device.tap(it) } }
 
-    commands = Observable.merge(skipCommand, closeCommand, okCommand)
-  }
-
-  fun print(message: String) {
-    output(message)
+    commands = Observable.concat(tapUnlockCommand, viewVideoLoopCommand, tapCollectPricesCommand)
   }
 
   fun start(): Unit {
-    disposable = commands
-        .subscribe { it.invoke() }
+    disposable = commands.subscribe { it() }
   }
 
   fun stop(): Unit {

@@ -25,11 +25,12 @@ public class MainForm {
     final Processor processor = new Processor();
     final Device device = new Device(processor, "0540e20f252725a6");
     final Function1<String, Unit> output = s -> {
-      taOutput.setText(s);
+      taOutput.append(s + "|");
       return null;
     };
     quickFight = new QuickFight(device, output);
     viewVideo = new ViewVideo(device, output);
+
     btQuickFight.addActionListener(e -> {
       if (quickFight.isRunning()) {
         btQuickFight.setText("Quick Fight");
