@@ -20,6 +20,7 @@ public class MainForm {
   private JButton btViewVideo;
   private JButton btQuickFight;
   private JTextArea taOutput;
+  private JButton btFullAuto;
 
   private MainForm() {
     final Processor processor = new Processor();
