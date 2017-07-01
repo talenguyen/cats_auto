@@ -1,10 +1,8 @@
 package vn.tale.cats_hack;
 
-import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 import kotlin.Unit;
@@ -20,6 +18,7 @@ public class MainForm {
   private JButton btViewVideo;
   private JButton btQuickFight;
   private JTextArea taOutput;
+  private JButton btFullAuto;
 
   private MainForm() {
     final Processor processor = new Processor();
@@ -30,6 +29,10 @@ public class MainForm {
     };
     quickFight = new QuickFight(device, output);
     viewVideo = new ViewVideo(device, output);
+    final Auto auto = new Auto(new GameController(device, s -> {
+      System.out.println(s);
+      return null;
+    }));
 
     btQuickFight.addActionListener(e -> {
       if (quickFight.isRunning()) {
@@ -45,15 +48,28 @@ public class MainForm {
     });
 
     btViewVideo.addActionListener(e -> {
-      if (viewVideo.isRunning()) {
+      if (auto.isRunning()) {
         btViewVideo.setText("View Video");
-        viewVideo.stop();
+        auto.stop();
         setAllButtonEnabled(true);
       } else {
-        viewVideo.start();
         setAllButtonEnabled(false);
         btViewVideo.setText("Stop");
         btViewVideo.setEnabled(true);
+        auto.viewVideo();
+      }
+    });
+
+    btFullAuto.addActionListener(e -> {
+      if (auto.isRunning()) {
+        auto.stop();
+        btFullAuto.setText("Full Auto");
+        setAllButtonEnabled(true);
+      } else {
+        setAllButtonEnabled(false);
+        btFullAuto.setText("Stop");
+        btFullAuto.setEnabled(true);
+        auto.full();
       }
     });
   }
