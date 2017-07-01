@@ -7,8 +7,11 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
+
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Giang Nguyen on 6/20/17.
@@ -16,20 +19,37 @@ import kotlin.jvm.functions.Function1;
 public class MainForm {
   private final QuickFight quickFight;
   private final ViewVideo viewVideo;
+  private final GoHome goHome;
+  private final SlowFight slowFight;
+  private final Restart restart;
+
   private JPanel container;
   private JButton btViewVideo;
   private JButton btQuickFight;
   private JTextArea taOutput;
+  private JButton btGoHome;
+  private JButton btAutoAll;
+  private JButton btRestart;
 
   private MainForm() {
     final Processor processor = new Processor();
-    final Device device = new Device(processor, "0540e20f252725a6");
+    final Device device = new Device(processor, "3100a5aba8142373");
     final Function1<String, Unit> output = s -> {
       taOutput.setText(s);
       return null;
     };
     quickFight = new QuickFight(device, output);
     viewVideo = new ViewVideo(device, output);
+    goHome = new GoHome(device, output);
+    slowFight = new SlowFight(device, output);
+    restart = new Restart(device, output);
+
+    btGoHome.addActionListener(e -> {
+      if (!goHome.isRunning()) {
+        goHome.start();
+      }
+    });
+
     btQuickFight.addActionListener(e -> {
       if (quickFight.isRunning()) {
         btQuickFight.setText("Quick Fight");
@@ -44,7 +64,7 @@ public class MainForm {
     });
 
     btViewVideo.addActionListener(e -> {
-      if (viewVideo.isRunning()) {
+      if (quickFight.isRunning()) {
         btViewVideo.setText("View Video");
         viewVideo.stop();
         setAllButtonEnabled(true);
@@ -53,6 +73,85 @@ public class MainForm {
         setAllButtonEnabled(false);
         btViewVideo.setText("Stop");
         btViewVideo.setEnabled(true);
+      }
+    });
+
+    btRestart.addActionListener(e -> {
+      setAllButtonEnabled(false);
+      btRestart.setText("Restarting...");
+      restart.start();
+      try {
+        TimeUnit.SECONDS.sleep(11);
+        restart.stop();
+        setAllButtonEnabled(true);
+        btRestart.setText("Restart");
+      } catch (InterruptedException e1) {
+      }
+
+
+    });
+
+    btAutoAll.addActionListener(e -> {
+      if (btAutoAll.getText() == "Stop") {
+        btAutoAll.setText("Auto Everything");
+        quickFight.stop();
+        viewVideo.stop();
+        goHome.start();
+        setAllButtonEnabled(true);
+      } else {
+        setAllButtonEnabled(false);
+        btAutoAll.setText("Stop");
+        btAutoAll.setEnabled(true);
+
+        Thread everything = new Thread(new Runnable() {
+          @Override
+          public void run() {
+            try {
+              while (btAutoAll.getText() == "Stop") {
+                System.out.println("Restart app");
+                restart.start();
+                TimeUnit.SECONDS.sleep(15);
+
+                System.out.println("Go home");
+                goHome.start();
+                TimeUnit.SECONDS.sleep(2);
+
+                for (int i = 0; i < 4; i++) {
+                  System.out.println("Quick fight");
+                  quickFight.start();
+                  TimeUnit.SECONDS.sleep(40);
+                  quickFight.stop();
+
+                  System.out.println("Slow fight");
+                  slowFight.start();
+                  TimeUnit.SECONDS.sleep(12);
+                  slowFight.stop();
+
+                  System.out.println("Go home");
+                  // Try to go home
+                  goHome.start();
+                  TimeUnit.SECONDS.sleep(2);
+
+                  System.out.println("Go home");
+                  // Try to go home
+                  goHome.start();
+                  TimeUnit.SECONDS.sleep(2);
+
+                  System.out.println("View video");
+                  viewVideo.start();
+                  TimeUnit.SECONDS.sleep(64);
+                }
+
+
+              }
+            } catch (InterruptedException e1) {
+              e1.printStackTrace();
+            }
+          }
+        });
+
+        everything.start();
+
       }
     });
   }
@@ -68,5 +167,8 @@ public class MainForm {
   private void setAllButtonEnabled(boolean enabled) {
     btViewVideo.setEnabled(enabled);
     btQuickFight.setEnabled(enabled);
+    btGoHome.setEnabled(enabled);
+    btAutoAll.setEnabled(enabled);
+    btRestart.setEnabled(enabled);
   }
 }

@@ -10,28 +10,26 @@ import java.util.concurrent.TimeUnit
  * Created by Giang Nguyen on 6/19/17.
  */
 class QuickFight(val device: Device, val output: (String) -> Unit = {}) {
-  private val QUICK_FIGHT_BUTTON = Point(1380, 950)
-  private val OK_BUTTON = Point(950, 990)
-  private val CENTER = Point(950, 450)
+  private val QUICK_FIGHT_BUTTON = Point(709, 600)
+  private val COLLECT_PRIZES_BUTTON = Point(709, 560)
 
-  val duration: Long = 15
+  val duration: Long = 500
   var disposable: Disposable? = null
-  val events: Observable<Point>
+
+  private var commands: Observable<() -> Unit>
 
   init {
-    val quickFight = Observable.interval(2, duration, TimeUnit.SECONDS, Schedulers.single())
-        .map { QUICK_FIGHT_BUTTON }
-        .doOnNext { print("Quick Fight") }
+    val quickFightCommand = Observable.interval(0, duration, TimeUnit.MILLISECONDS, Schedulers.single())
+      .doOnNext { print("Quick Fight") }
+      .map { QUICK_FIGHT_BUTTON }
+      .map { { device.tap(it) } }
 
-    val center = Observable.interval(4, duration, TimeUnit.SECONDS, Schedulers.single())
-        .map { CENTER }
-        .doOnNext { print("Center") }
+    val collectPrizeCommand = Observable.interval(250, duration, TimeUnit.MILLISECONDS, Schedulers.single())
+      .doOnNext { print("Quick Fight") }
+      .map { COLLECT_PRIZES_BUTTON }
+      .map { { device.tap(it) } }
 
-    val ok = Observable.interval(11, duration, TimeUnit.SECONDS, Schedulers.single())
-        .map { OK_BUTTON }
-        .doOnNext { print("OK") }
-
-    events = Observable.merge(quickFight, center, ok)
+    commands = Observable.merge(quickFightCommand, collectPrizeCommand)
   }
 
   fun print(message: String) {
@@ -39,8 +37,8 @@ class QuickFight(val device: Device, val output: (String) -> Unit = {}) {
   }
 
   fun start(): Unit {
-    disposable = events
-        .subscribe { device.tap(it) }
+    disposable = commands
+      .subscribe { it() }
   }
 
   fun stop(): Unit {
