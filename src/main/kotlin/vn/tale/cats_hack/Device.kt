@@ -9,10 +9,10 @@ class Device(private val processor: Processor, private val deviceId: String? = n
   fun restart() {
     if (deviceId == null) {
       processor.exec("adb", "shell", "am", "force-stop", "com.zeptolab.cats.google")
-      processor.exec("adb", "shell", "am", "start", "-n", "com.zeptolab.cats.google")
+      processor.exec("adb", "shell","am", "start", "-n", "com.zeptolab.cats.google/com.zeptolab.cats.CATSActivity")
     } else {
-      processor.exec("adb", "-s", deviceId, "am", "force-stop", "com.zeptolab.cats.google")
-      processor.exec("adb", "-s", deviceId, "am", "start", "-n", "com.zeptolab.cats.google")
+      processor.exec("adb", "-s", deviceId, "shell", "am", "force-stop", "com.zeptolab.cats.google")
+      processor.exec("adb", "-s", deviceId, "shell","am", "start", "-n", "com.zeptolab.cats.google/com.zeptolab.cats.CATSActivity")
     }
   }
 

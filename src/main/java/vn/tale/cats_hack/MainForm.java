@@ -1,4 +1,5 @@
 package vn.tale.cats_hack;
+
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -6,8 +7,10 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
+
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
+
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -26,6 +29,7 @@ public class MainForm {
   private JTextArea taOutput;
   private JButton btGoHome;
   private JButton btAutoAll;
+  private JButton btRestart;
 
   private MainForm() {
     final Processor processor = new Processor();
@@ -72,6 +76,21 @@ public class MainForm {
       }
     });
 
+    btRestart.addActionListener(e -> {
+      setAllButtonEnabled(false);
+      btRestart.setText("Restarting...");
+      restart.start();
+      try {
+        TimeUnit.SECONDS.sleep(11);
+        restart.stop();
+        setAllButtonEnabled(true);
+        btRestart.setText("Restart");
+      } catch (InterruptedException e1) {
+      }
+
+
+    });
+
     btAutoAll.addActionListener(e -> {
       if (btAutoAll.getText() == "Stop") {
         btAutoAll.setText("Auto Everything");
@@ -84,43 +103,54 @@ public class MainForm {
         btAutoAll.setText("Stop");
         btAutoAll.setEnabled(true);
 
-        try {
-          System.out.println("Restart app");
-          restart.start();
-          TimeUnit.SECONDS.sleep(11);
+        Thread everything = new Thread(new Runnable() {
+          @Override
+          public void run() {
+            try {
+              while (btAutoAll.getText() == "Stop") {
+                System.out.println("Restart app");
+                restart.start();
+                TimeUnit.SECONDS.sleep(15);
 
-          System.out.println("Go home");
-          goHome.start();
-          TimeUnit.SECONDS.sleep(2);
+                System.out.println("Go home");
+                goHome.start();
+                TimeUnit.SECONDS.sleep(2);
 
-          while (btAutoAll.getText() == "Stop") {
-            System.out.println("Quick fight");
-            quickFight.start();
-            TimeUnit.SECONDS.sleep(40);
-            quickFight.stop();
+                for (int i = 0; i < 4; i++) {
+                  System.out.println("Quick fight");
+                  quickFight.start();
+                  TimeUnit.SECONDS.sleep(40);
+                  quickFight.stop();
 
-            System.out.println("Slow fight");
-            slowFight.start();
-            TimeUnit.SECONDS.sleep(12);
-            slowFight.stop();
+                  System.out.println("Slow fight");
+                  slowFight.start();
+                  TimeUnit.SECONDS.sleep(12);
+                  slowFight.stop();
 
-            System.out.println("Go home");
-            // Try to go home
-            goHome.start();
-            TimeUnit.SECONDS.sleep(2);
+                  System.out.println("Go home");
+                  // Try to go home
+                  goHome.start();
+                  TimeUnit.SECONDS.sleep(2);
 
-            System.out.println("Go home");
-            // Try to go home
-            goHome.start();
-            TimeUnit.SECONDS.sleep(2);
+                  System.out.println("Go home");
+                  // Try to go home
+                  goHome.start();
+                  TimeUnit.SECONDS.sleep(2);
 
-            System.out.println("View video");
-            viewVideo.start();
-            TimeUnit.SECONDS.sleep(64);
+                  System.out.println("View video");
+                  viewVideo.start();
+                  TimeUnit.SECONDS.sleep(64);
+                }
+
+
+              }
+            } catch (InterruptedException e1) {
+              e1.printStackTrace();
+            }
           }
-        } catch (InterruptedException e1) {
-          e1.printStackTrace();
-        }
+        });
+
+        everything.start();
 
       }
     });
@@ -139,5 +169,6 @@ public class MainForm {
     btQuickFight.setEnabled(enabled);
     btGoHome.setEnabled(enabled);
     btAutoAll.setEnabled(enabled);
+    btRestart.setEnabled(enabled);
   }
 }
