@@ -1,5 +1,4 @@
 package vn.tale.cats_hack;
-
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,6 +17,9 @@ public class MainForm {
   private final QuickFight quickFight;
   private final ViewVideo viewVideo;
   private final GoHome goHome;
+  private final SlowFight slowFight;
+  private final Restart restart;
+
   private JPanel container;
   private JButton btViewVideo;
   private JButton btQuickFight;
@@ -35,6 +37,8 @@ public class MainForm {
     quickFight = new QuickFight(device, output);
     viewVideo = new ViewVideo(device, output);
     goHome = new GoHome(device, output);
+    slowFight = new SlowFight(device, output);
+    restart = new Restart(device, output);
 
     btGoHome.addActionListener(e -> {
       if (!goHome.isRunning()) {
@@ -81,32 +85,38 @@ public class MainForm {
         btAutoAll.setEnabled(true);
 
         try {
+          System.out.println("Restart app");
+          restart.start();
+          TimeUnit.SECONDS.sleep(11);
+
+          System.out.println("Go home");
           goHome.start();
           TimeUnit.SECONDS.sleep(2);
 
           while (btAutoAll.getText() == "Stop") {
-            System.out.println("Just trying");
+            System.out.println("Quick fight");
+            quickFight.start();
+            TimeUnit.SECONDS.sleep(40);
+            quickFight.stop();
 
-              // Fight for 150 minute to make sure to got streak of 5
-              quickFight.start();
-              TimeUnit.SECONDS.sleep(150);
-              quickFight.stop();
+            System.out.println("Slow fight");
+            slowFight.start();
+            TimeUnit.SECONDS.sleep(12);
+            slowFight.stop();
 
-              // Try to go home
-              goHome.start();
-              TimeUnit.SECONDS.sleep(2);
-              goHome.start();
-              TimeUnit.SECONDS.sleep(2);
+            System.out.println("Go home");
+            // Try to go home
+            goHome.start();
+            TimeUnit.SECONDS.sleep(2);
 
-              // View video 1 time
-              viewVideo.start();
-              TimeUnit.SECONDS.sleep(39);
-              viewVideo.stop();
+            System.out.println("Go home");
+            // Try to go home
+            goHome.start();
+            TimeUnit.SECONDS.sleep(2);
 
-              // View video once more
-              viewVideo.start();
-              TimeUnit.SECONDS.sleep(39);
-              viewVideo.stop();
+            System.out.println("View video");
+            viewVideo.start();
+            TimeUnit.SECONDS.sleep(64);
           }
         } catch (InterruptedException e1) {
           e1.printStackTrace();

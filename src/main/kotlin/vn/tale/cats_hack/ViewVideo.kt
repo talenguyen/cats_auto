@@ -15,36 +15,36 @@ class ViewVideo(val device: Device, val output: (String) -> Unit = {}) {
   private val BOX_BUTTON = Point(229, 245)
 
   private val commands: Observable<() -> Unit>
-  private val duration: Long = 38
+  private val duration: Long = 63
   private var disposable: Disposable? = null
 
   init {
     val boxCommand = Observable.interval(0, duration, TimeUnit.SECONDS, Schedulers.single())
-            .doOnNext { print("Click to box") }
-            .map { BOX_BUTTON }
-            .map { { device.tap(it) } }
+      .doOnNext { print("Click to box") }
+      .map { BOX_BUTTON }
+      .map { { device.tap(it) } }
 
     val openCommand = Observable.interval(2, duration, TimeUnit.SECONDS, Schedulers.single())
-            .doOnNext { print("Open box") }
-            .map { SKIP_OPEN_BUTTON }
-            .map { { device.tap(it) } }
+      .doOnNext { print("Open box") }
+      .map { SKIP_OPEN_BUTTON }
+      .map { { device.tap(it) } }
 
     val skipCommand = Observable.interval(4, duration, TimeUnit.SECONDS, Schedulers.single())
-        .doOnNext { print("Skip") }
-        .map { SKIP_OPEN_BUTTON }
-        .map { { device.tap(it) } }
+      .doOnNext { print("Skip") }
+      .map { SKIP_OPEN_BUTTON }
+      .map { { device.tap(it) } }
 
-    val closeCommand = Observable.interval(35, duration, TimeUnit.SECONDS, Schedulers.single())
-        .doOnNext { print("Close") }
-        .map { { device.back() } }
+    val closeCommand = Observable.interval(60, duration, TimeUnit.SECONDS, Schedulers.single())
+      .doOnNext { print("Close") }
+      .map { { device.back() } }
 
-    val closeAgainCommand = Observable.interval(36, duration, TimeUnit.SECONDS, Schedulers.single())
-            .doOnNext { print("Close 2") }
-            .map { { device.back() } }
+    val closeAgainCommand = Observable.interval(61, duration, TimeUnit.SECONDS, Schedulers.single())
+      .doOnNext { print("Close 2") }
+      .map { { device.back() } }
 
-    val closeMoreCommand = Observable.interval(37, duration, TimeUnit.SECONDS, Schedulers.single())
-            .doOnNext { print("Close 3") }
-            .map { { device.back() } }
+    val closeMoreCommand = Observable.interval(62, duration, TimeUnit.SECONDS, Schedulers.single())
+      .doOnNext { print("Close 3") }
+      .map { { device.back() } }
 
     commands = Observable.merge(listOf(boxCommand, openCommand, skipCommand, closeCommand, closeAgainCommand, closeMoreCommand))
   }
@@ -55,8 +55,8 @@ class ViewVideo(val device: Device, val output: (String) -> Unit = {}) {
 
   fun start(): Unit {
     disposable = commands
-            .take(6)
-        .subscribe { it.invoke() }
+      .take(6)
+      .subscribe { it.invoke() }
   }
 
   fun stop(): Unit {
