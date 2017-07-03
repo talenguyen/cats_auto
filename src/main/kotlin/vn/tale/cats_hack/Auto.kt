@@ -12,7 +12,7 @@ class Auto(private val gameController: GameController) {
 
   fun full() {
     exec {
-      repeat(30,
+      repeat(60,
           { gameController.runAFightLoop() }) // Run Quick-Fight for 120 times is about 60s
       gameController.stopTheFighting()
       gameController.goHome()
